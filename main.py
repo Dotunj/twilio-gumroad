@@ -10,6 +10,9 @@ twilio_client = Client()
 
 @app.route('/incoming/sales', methods=['POST'])
 def send_sms():
+    seller_id = request.form['seller_id']
+    if seller_id != os.getenv('GUMROAD_SELLER_ID'):
+       return Response()
     product_name= request.form['product_name']
     message= f"Hello, you just made a Sale! Your product {product_name} was just purchased on Gumroad!"
     twilio_from = os.getenv("TWILIO_NUMBER")
